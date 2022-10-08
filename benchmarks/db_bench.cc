@@ -816,6 +816,7 @@ class Benchmark {
         bytes += value_size_ + key.slice().size();
         thread->stats.FinishedSingleOp();
       }
+
       s = db_->Write(write_options_, &batch);
       if (!s.ok()) {
         std::fprintf(stderr, "put error: %s\n", s.ToString().c_str());

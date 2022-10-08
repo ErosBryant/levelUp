@@ -53,6 +53,8 @@ class LEVELDB_EXPORT WriteBatch {
   // If the database contains a mapping for "key", erase it.  Else do nothing.
   void Delete(const Slice& key);
 
+
+  void Ktype(const Slice& key);
   // Clear all updates buffered in this batch.
   void Clear();
 
@@ -72,10 +74,13 @@ class LEVELDB_EXPORT WriteBatch {
   // Support for iterating over the contents of a batch.
   Status Iterate(Handler* handler) const;
 
+//선별용
+  uint64_t type_;
  private:
   friend class WriteBatchInternal;
 
   std::string rep_;  // See comment in write_batch.cc for the format of rep_
+  
 };
 
 }  // namespace leveldb

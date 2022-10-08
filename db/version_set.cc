@@ -1276,10 +1276,14 @@ Compaction* VersionSet::PickCompaction() {
       // Wrap-around to the beginning of the key space
       c->inputs_[0].push_back(current_->files_[level][0]);
     }
+    compaction_count++;
+    std::fprintf(stdout,"compaction count : %d\n",compaction_count);
   } else if (seek_compaction) {
     level = current_->file_to_compact_level_;
     c = new Compaction(options_, level);
     c->inputs_[0].push_back(current_->file_to_compact_);
+    compaction_count++;
+    std::fprintf(stdout,"compaction count : %d\n",compaction_count);
   } else {
     return nullptr;
   }

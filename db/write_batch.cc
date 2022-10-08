@@ -37,6 +37,17 @@ void WriteBatch::Clear() {
   rep_.resize(kHeader);
 }
 
+
+void WriteBatch::Ktype(const Slice& key){
+
+  uint64_t anum = DecodeFixed64(key.data() + key.size() - 8);
+   if (anum %2 == 0) {
+    type_= 0;  
+  }else{
+    type_= 1;
+  }
+}
+
 size_t WriteBatch::ApproximateSize() const { return rep_.size(); }
 
 Status WriteBatch::Iterate(Handler* handler) const {
@@ -100,6 +111,8 @@ void WriteBatch::Put(const Slice& key, const Slice& value) {
   rep_.push_back(static_cast<char>(kTypeValue));
   PutLengthPrefixedSlice(&rep_, key);
   PutLengthPrefixedSlice(&rep_, value);
+  WriteBatch::Ktype(key);
+
 }
 
 void WriteBatch::Delete(const Slice& key) {
